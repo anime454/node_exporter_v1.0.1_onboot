@@ -57,15 +57,6 @@ if [ $? -eq 0 ]; then
          sudo echo "ERROR: give permistion to node_exporter_user" >> $log
          exit 1
       fi
-      echo "create node_exporter service file"
-      sudo wget https://raw.githubusercontent.com/anime454/node_exporter_v1.0.1_onboot/main/node_exporter 
-      sudo cp node_exporter /etc/init.d 
-      sudo chmod a+x /etc/init.d/node_exporter
-      if [ $? -ne 0 ]; then
-         echo "ERROR: create node_exporter service file"
-         sudo echo "ERROR: create node_exporter service file" >> $log
-         exit 1
-      fi
       echo "systemctl config"
       sudo node_exporter & 
       if [ $? -ne 0 ]; then
@@ -73,7 +64,7 @@ if [ $? -eq 0 ]; then
          sudo echo "ERROR: start node_exporter" >> $log
       	 exit 1
       fi
-      sudo update-rc.d node_exporter defaults
+      (crontab -l 2>/dev/null; echo "@reboot /usr/local/bin/node_exporter &") | crontab -
       if [ $? -ne 0 ]; then
          echo "ERROR: enable node_exporter on boot"
          sudo echo "ERROR: enable node_exporter on boot" >> $log
