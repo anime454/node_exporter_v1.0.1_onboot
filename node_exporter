@@ -14,7 +14,7 @@ NODE_EXPORTER=/usr/local/bin/node_exporter
 
 case "$1" in
  start)
-   su joe -c $NODE_EXPORTE
+   su node_exporter -c $NODE_EXPORTE
    ;;
 *)
    echo "Usage: start only" >&2
