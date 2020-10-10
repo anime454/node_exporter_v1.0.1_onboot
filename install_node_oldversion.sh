@@ -67,7 +67,7 @@ if [ $? -eq 0 ]; then
          exit 1
       fi
       echo "systemctl config"
-      sudo ./node_exporter start
+      sudo node_exporter & 
       if [ $? -ne 0 ]; then
          echo "ERROR: start node_exporter"
          sudo echo "ERROR: start node_exporter" >> $log
